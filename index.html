@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Au Jardin des Fleurs aux Fruits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Work+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EFEEDC;
+    --paper-deep:#E6E3CC;
+    --ink:#232A1D;
+    --ink-soft:#4B5240;
+    --orchard:#4B5D3A;
+    --orchard-dark:#333F27;
+    --plum:#5C3A4E;
+    --plum-dark:#432B39;
+    --peach:#E2884E;
+    --peach-dark:#C96A31;
+    --gold:#C99A2E;
+    --cream-card:#F8F6EB;
+    --line:rgba(35,42,29,0.14);
+    --shadow: 0 10px 30px rgba(35,42,29,0.10);
+    --radius: 4px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+    margin:0;
+  }
+  .mono{
+    font-family:'Space Mono', monospace;
+  }
+  a{color:inherit;}
+  img,svg{display:block; max-width:100%;}
+  button{font-family:inherit; cursor:pointer;}
+  :focus-visible{outline:2.5px solid var(--peach-dark); outline-offset:3px;}
+
+  /* ---------- topbar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    max-width:1180px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 28px;
+    gap:20px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:12px;
+  }
+  .brand-mark{width:34px; height:34px; flex-shrink:0;}
+  .brand-name{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:1.15rem;
+    line-height:1.15;
+  }
+  nav.tabs{
+    display:flex;
+    gap:4px;
+    background:var(--paper-deep);
+    padding:5px;
+    border-radius:999px;
+  }
+  nav.tabs button{
+    border:none;
+    background:transparent;
+    padding:10px 20px;
+    font-size:0.86rem;
+    letter-spacing:0.03em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    border-radius:999px;
+    transition:background .25s ease, color .25s ease;
+  }
+  nav.tabs button.active{
+    background:var(--orchard);
+    color:var(--paper);
+  }
+  nav.tabs button:hover:not(.active){
+    color:var(--ink);
+  }
+
+  /* ---------- layout ---------- */
+  main{max-width:1180px; margin:0 auto; padding:0 28px;}
+  .panel{display:none;}
+  .panel.active{display:block; animation:fade .5s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+  @media (prefers-reduced-motion: reduce){
+    .panel.active{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  section{padding:64px 0;}
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--peach-dark);
+    margin-bottom:14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px; background:var(--peach-dark);
+  }
+
+  /* ---------- HERO (projet) ---------- */
+  .hero{
+    display:grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap:48px;
+    align-items:center;
+    padding-top:40px;
+  }
+  .hero h1{
+    font-size:clamp(2.3rem, 4.2vw, 3.4rem);
+    line-height:1.04;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--orchard);
+  }
+  .hero p.lede{
+    margin-top:22px;
+    font-size:1.08rem;
+    color:var(--ink-soft);
+    max-width:46ch;
+  }
+  .hero-illustration{
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    background:linear-gradient(180deg,#EAF1DE 0%, #F7F3E2 60%, #F1E3CE 100%);
+  }
+  .hero-illustration svg{width:100%; height:auto; display:block;}
+
+  .path-grow{
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: draw 2.4s ease forwards;
+  }
+  @keyframes draw{ to{stroke-dashoffset:0;} }
+  @media (prefers-reduced-motion: reduce){ .path-grow{animation:none; stroke-dashoffset:0;} }
+
+  /* pillars */
+  .pillars{
+    margin-top:70px;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .pillar{
+    background:var(--paper);
+    padding:30px 24px;
+  }
+  .pillar .num{
+    font-family:'Space Mono', monospace;
+    font-size:0.75rem;
+    color:var(--gold);
+    margin-bottom:16px;
+  }
+  .pillar h3{font-size:1.05rem; margin-bottom:8px; font-weight:600;}
+  .pillar p{font-size:0.9rem; color:var(--ink-soft); margin:0;}
+
+  /* project narrative */
+  .narrative{
+    margin-top:80px;
+    display:grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap:56px;
+  }
+  .narrative h2{font-size:1.9rem; max-width:12ch;}
+  .narrative .body-text p{color:var(--ink-soft); margin:0 0 18px;}
+  .narrative .body-text p:last-child{margin-bottom:0;}
+
+  /* gallery */
+  .gallery{
+    margin-top:70px;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+  }
+  .gallery figure{margin:0;}
+  .gallery .frame{
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    aspect-ratio:4/3.1;
+  }
+  .gallery figcaption{
+    margin-top:10px;
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    color:var(--ink-soft);
+    letter-spacing:0.02em;
+  }
+
+  /* ---------- PRODUITS ---------- */
+  .produits-head{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:end;
+  }
+  .produits-head h2{font-size:2.2rem; max-width:14ch;}
+
+  .wheel-wrap{
+    margin-top:60px;
+    display:grid;
+    grid-template-columns: 460px 1fr;
+    gap:56px;
+    align-items:center;
+  }
+  #season-svg{width:100%; height:auto;}
+  .month-slice{cursor:pointer; transition:opacity .2s ease;}
+  .month-slice:hover, .month-slice.active{opacity:1;}
+  .month-slice{opacity:0.55;}
+  .month-label{
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    fill:var(--ink);
+    pointer-events:none;
+  }
+
+  .season-detail{
+    background:var(--cream-card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:34px;
+    min-height:260px;
+  }
+  .season-detail .month-name{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:1.6rem;
+    color:var(--orchard-dark);
+    margin-bottom:18px;
+  }
+  .produce-list{
+    list-style:none; margin:0; padding:0;
+    display:flex; flex-wrap:wrap; gap:10px;
+  }
+  .produce-list li{
+    background:var(--paper);
+    border:1px solid var(--line);
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:0.88rem;
+  }
+  .season-hint{
+    margin-top:20px;
+    font-size:0.82rem;
+    color:var(--ink-soft);
+  }
+
+  .principles{
+    margin-top:80px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+  }
+  .principle-card{
+    padding:28px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:var(--paper);
+  }
+  .principle-card svg{width:38px; height:38px; margin-bottom:16px;}
+  .principle-card h3{font-size:1.02rem; margin-bottom:8px;}
+  .principle-card p{font-size:0.88rem; color:var(--ink-soft); margin:0;}
+
+  .vente-info{
+    margin-top:70px;
+    background:var(--orchard);
+    color:var(--paper);
+    border-radius:var(--radius);
+    padding:40px 44px;
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    gap:30px;
+    align-items:center;
+  }
+  .vente-info h3{color:var(--paper); font-size:1.4rem; margin-bottom:10px;}
+  .vente-info p{color:#E4E9D8; margin:0; font-size:0.95rem;}
+  .vente-info .details{
+    font-family:'Space Mono', monospace;
+    font-size:0.85rem;
+    display:flex; flex-direction:column; gap:8px;
+    border-left:1px solid rgba(255,255,255,0.25);
+    padding-left:24px;
+  }
+
+  /* ---------- LOGEMENTS ---------- */
+  .logements-head h2{font-size:2.2rem; max-width:16ch;}
+  .logements-head p{color:var(--ink-soft); max-width:60ch; margin-top:14px;}
+
+  .gite{
+    margin-top:64px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    background:var(--cream-card);
+  }
+  .gite-top{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .gite-illustration{
+    background:linear-gradient(160deg,#E7EFDC, #F3E9D2);
+    aspect-ratio:5/4;
+  }
+  .gite-illustration svg{width:100%; height:100%;}
+  .gite-info{padding:36px 40px; display:flex; flex-direction:column; justify-content:center;}
+  .gite-info .eyebrow{margin-bottom:10px;}
+  .gite-info h3{font-size:1.7rem; margin-bottom:14px;}
+  .gite-info p.desc{color:var(--ink-soft); font-size:0.94rem; margin-bottom:22px;}
+  .traits{list-style:none; margin:0 0 24px; padding:0; display:flex; flex-direction:column; gap:10px;}
+  .traits li{display:flex; align-items:center; gap:10px; font-size:0.9rem;}
+  .traits li svg{width:18px; height:18px; flex-shrink:0; color:var(--orchard);}
+  .price-tag{
+    font-family:'Space Mono', monospace;
+    font-size:1.05rem;
+    color:var(--plum-dark);
+    background:var(--paper);
+    display:inline-block;
+    padding:10px 18px;
+    border-radius:999px;
+    width:fit-content;
+    border:1px solid var(--line);
+  }
+  .price-tag b{font-size:1.3rem;}
+
+  .gite-calendar{
+    border-top:1px solid var(--line);
+    padding:36px 40px 44px;
+  }
+  .cal-head{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:20px;
+  }
+  .cal-head h4{font-family:'Fraunces',serif; font-style:italic; font-weight:500; font-size:1.15rem;}
+  .cal-nav{display:flex; gap:8px;}
+  .cal-nav button{
+    border:1px solid var(--line);
+    background:var(--paper);
+    width:32px; height:32px;
+    border-radius:50%;
+    font-size:1rem;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .cal-nav button:hover{background:var(--paper-deep);}
+  .cal-grid{
+    display:grid;
+    grid-template-columns:repeat(7, 1fr);
+    gap:6px;
+  }
+  .cal-dow{
+    font-family:'Space Mono', monospace;
+    font-size:0.68rem;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    text-align:center;
+    padding-bottom:6px;
+  }
+  .cal-day{
+    aspect-ratio:1;
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.82rem;
+    border-radius:6px;
+    border:1px solid transparent;
+    background:var(--paper);
+    color:var(--ink);
+  }
+  .cal-day.empty{background:transparent;}
+  .cal-day.past{color:var(--line); background:transparent;}
+  .cal-day.available{cursor:pointer; border:1px solid var(--line);}
+  .cal-day.available:hover{background:#DDEACB; border-color:var(--orchard);}
+  .cal-day.selected{background:var(--orchard); color:var(--paper); border-color:var(--orchard);}
+  .cal-day.pending{background:#F2DCC4; color:var(--peach-dark); position:relative;}
+  .cal-day.booked{background:#E7D5DC; color:var(--plum-dark);}
+  .cal-legend{
+    display:flex; gap:18px; margin-top:18px; flex-wrap:wrap;
+  }
+  .cal-legend span{
+    font-size:0.76rem; color:var(--ink-soft);
+    display:flex; align-items:center; gap:6px;
+  }
+  .swatch{width:11px; height:11px; border-radius:3px; display:inline-block;}
+
+  .request-form{
+    margin-top:26px;
+    border-top:1px dashed var(--line);
+    padding-top:26px;
+    display:none;
+  }
+  .request-form.open{display:block; animation:fade .35s ease;}
+  .request-form .selected-date{
+    font-family:'Space Mono', monospace;
+    font-size:0.86rem;
+    color:var(--plum-dark);
+    margin-bottom:16px;
+  }
+  .form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  .form-grid label{
+    display:flex; flex-direction:column; gap:6px;
+    font-size:0.8rem; color:var(--ink-soft);
+  }
+  .form-grid label.full{grid-column:1/-1;}
+  input, textarea{
+    font-family:'Work Sans', sans-serif;
+    font-size:0.92rem;
+    padding:10px 12px;
+    border:1px solid var(--line);
+    border-radius:4px;
+    background:var(--paper);
+    color:var(--ink);
+  }
+  textarea{resize:vertical; min-height:70px;}
+  .form-actions{
+    margin-top:18px;
+    display:flex; align-items:center; gap:16px;
+  }
+  .btn-primary{
+    background:var(--plum);
+    color:var(--paper);
+    border:none;
+    padding:12px 26px;
+    border-radius:999px;
+    font-size:0.86rem;
+    letter-spacing:0.02em;
+    transition:background .2s ease;
+  }
+  .btn-primary:hover{background:var(--plum-dark);}
+  .btn-ghost{
+    background:transparent;
+    border:none;
+    color:var(--ink-soft);
+    font-size:0.82rem;
+    text-decoration:underline;
+  }
+  .form-note{font-size:0.76rem; color:var(--ink-soft); margin-top:14px; max-width:60ch;}
+  .confirm-msg{
+    margin-top:16px;
+    font-size:0.86rem;
+    color:var(--orchard-dark);
+    background:#E4EDD6;
+    border:1px solid #C9DBAF;
+    padding:12px 16px;
+    border-radius:4px;
+    display:none;
+  }
+  .confirm-msg.show{display:block;}
+
+  /* ---------- footer contact ---------- */
+  footer.contact-bar{
+    margin-top:40px;
+    background:var(--ink);
+    color:var(--paper);
+  }
+  .contact-inner{
+    max-width:1180px; margin:0 auto;
+    padding:52px 28px 40px;
+    display:grid;
+    grid-template-columns:1.2fr 1fr 1fr;
+    gap:40px;
+  }
+  .contact-inner .brand-name{color:var(--paper); font-size:1.3rem;}
+  .contact-inner p.tag{color:#B7BBA9; font-size:0.9rem; margin-top:12px; max-width:32ch;}
+  .contact-col h4{
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--gold);
+    margin-bottom:16px;
+  }
+  .contact-col p, .contact-col a{
+    display:block;
+    color:#DEDFCF;
+    text-decoration:none;
+    font-size:0.92rem;
+    margin-bottom:10px;
+  }
+  .contact-col a:hover{color:var(--peach);}
+  .bottom-line{
+    border-top:1px solid rgba(255,255,255,0.12);
+    padding:20px 28px;
+    max-width:1180px; margin:0 auto;
+    font-size:0.74rem;
+    color:#8B8F7C;
+    display:flex; justify-content:space-between;
+  }
+
+  @media (max-width: 880px){
+    .hero, .narrative, .wheel-wrap, .produits-head, .gite-top, .vente-info, .contact-inner{
+      grid-template-columns:1fr !important;
+    }
+    .pillars{grid-template-columns:repeat(2,1fr);}
+    .gallery{grid-template-columns:1fr 1fr;}
+    .principles{grid-template-columns:1fr;}
+    nav.tabs{overflow-x:auto;}
+    .topbar-inner{flex-wrap:wrap;}
+    .form-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="19" stroke="#4B5D3A" stroke-width="1.4"/>
+        <path d="M20 28c0-8 5-13 5-13s5 5 5 13" stroke="#E2884E" stroke-width="1.4" fill="none"/>
+        <path d="M20 28c0-8-5-13-5-13s-5 5-5 13" stroke="#4B5D3A" stroke-width="1.4" fill="none"/>
+        <circle cx="20" cy="28" r="1.6" fill="#C99A2E"/>
+      </svg>
+      <div class="brand-name">Au Jardin des<br>Fleurs aux Fruits</div>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Navigation principale">
+      <button class="active" data-tab="projet" role="tab" aria-selected="true">Le projet</button>
+      <button data-tab="produits" role="tab" aria-selected="false">Nos produits</button>
+      <button data-tab="logements" role="tab" aria-selected="false">Les logements</button>
+    </nav>
+  </div>
+</div>
+
+<main>
+
+  <!-- ===================== ONGLET 1 : LE PROJET ===================== -->
+  <section id="projet" class="panel active">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Notre ferme</div>
+        <h1>Une petite production, cultivée <em>à la main</em>, dans le respect du vivant.</h1>
+        <p class="lede">Au Jardin des Fleurs aux Fruits est une ferme biologique familiale où légumes et fruits de variétés anciennes et locales poussent à leur rythme, sans intrants chimiques, dans une logique de petite production pensée pour la qualité plutôt que le volume.</p>
+      </div>
+      <div class="hero-illustration">
+        <svg viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg">
+          <rect width="520" height="420" fill="none"/>
+          <path d="M0 300 Q130 260 260 295 T520 280 V420 H0 Z" fill="#DCE7C6"/>
+          <path d="M0 330 Q140 300 260 325 T520 315 V420 H0 Z" fill="#C9DBAF"/>
+          <circle cx="410" cy="70" r="34" fill="#F2DCA1"/>
+          <g stroke="#4B5D3A" stroke-width="2.4" fill="none" stroke-linecap="round">
+            <path class="path-grow" d="M110 300 V190" />
+            <path class="path-grow" d="M110 220 Q80 200 70 170" />
+            <path class="path-grow" d="M110 210 Q140 190 150 160" />
+            <path class="path-grow" d="M110 250 Q75 235 60 210" />
+            <path class="path-grow" d="M110 245 Q145 232 158 205" />
+          </g>
+          <circle cx="70" cy="168" r="7" fill="#E2884E"/>
+          <circle cx="150" cy="158" r="7" fill="#E2884E"/>
+          <circle cx="60" cy="208" r="6" fill="#C96A31"/>
+          <circle cx="158" cy="203" r="6" fill="#C96A31"/>
+          <g stroke="#5C3A4E" stroke-width="2.4" fill="none" stroke-linecap="round">
+            <path class="path-grow" d="M260 300 V170" />
+            <path class="path-grow" d="M260 200 Q225 180 210 150" />
+            <path class="path-grow" d="M260 190 Q295 172 312 145" />
+            <path class="path-grow" d="M260 230 Q220 218 202 195" />
+          </g>
+          <circle cx="210" cy="148" r="9" fill="#8E6D8A"/>
+          <circle cx="312" cy="143" r="9" fill="#8E6D8A"/>
+          <circle cx="202" cy="193" r="8" fill="#7A5A78"/>
+          <g stroke="#4B5D3A" stroke-width="2.2" fill="none" stroke-linecap="round">
+            <path class="path-grow" d="M400 300 V210" />
+            <path class="path-grow" d="M400 235 Q370 218 358 195" />
+            <path class="path-grow" d="M400 225 Q430 210 445 185" />
+          </g>
+          <ellipse cx="358" cy="192" rx="8" ry="10" fill="#C99A2E"/>
+          <ellipse cx="445" cy="182" rx="8" ry="10" fill="#C99A2E"/>
+          <g fill="#333F27" opacity="0.85">
+            <path d="M470 110 q10 -6 20 0 q-10 6 -20 0 Z"/>
+            <path d="M485 100 q10 -6 20 0 q-10 6 -20 0 Z"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="num">01</div>
+        <h3>Agriculture biologique</h3>
+        <p>Aucun intrant chimique de synthèse : nous travaillons avec le sol, le compost et les auxiliaires naturels.</p>
+      </div>
+      <div class="pillar">
+        <div class="num">02</div>
+        <h3>Variétés multiples</h3>
+        <p>Des dizaines de variétés de légumes et de fruits, souvent anciennes ou locales, cultivées côte à côte.</p>
+      </div>
+      <div class="pillar">
+        <div class="num">03</div>
+        <h3>Petite production</h3>
+        <p>Nous cultivons peu, mais bien : chaque parcelle est pensée, observée et récoltée à la main.</p>
+      </div>
+      <div class="pillar">
+        <div class="num">04</div>
+        <h3>Travail manuel</h3>
+        <p>Semis, désherbage, récolte : la quasi-totalité du travail se fait sans machine lourde, à taille humaine.</p>
+      </div>
+    </div>
+
+    <div class="narrative">
+      <h2>Une histoire de terre et de patience</h2>
+      <div class="body-text">
+        <p>Le projet Au Jardin des Fleurs aux Fruits est né d'une envie simple : cultiver autrement, à petite échelle, en laissant au sol et aux plantes le temps dont ils ont besoin. Ici, pas de monoculture ni de rendement à tout prix — chaque planche de culture mêle légumes, fleurs compagnes et arbres fruitiers.</p>
+        <p>Nous avons fait le choix de la diversité : plusieurs dizaines de variétés de légumes se succèdent au fil des saisons, aux côtés de vergers de pêchers, poiriers, figuiers et pommiers. Cette diversité protège le sol, nourrit les pollinisateurs, et donne à chaque récolte un goût que la culture intensive ne permet pas.</p>
+        <p>La ferme reste volontairement modeste en surface. C'est ce choix de petite production qui nous permet de tout faire à la main — de la préparation des sols jusqu'à la cueillette — et de proposer des produits que nous connaissons littéralement un par un.</p>
+      </div>
+    </div>
+
+    <div class="gallery">
+      <figure>
+        <div class="frame" style="background:linear-gradient(150deg,#DCE7C6,#B9CE9B);display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 200 160" width="70%">
+            <g stroke="#333F27" stroke-width="2" fill="none" stroke-linecap="round">
+              <path d="M20 140 L20 40"/><path d="M20 60 Q0 50 -5 30"/><path d="M20 60 Q40 50 45 30"/>
+              <path d="M60 140 L60 20"/><path d="M60 45 Q40 35 35 15"/><path d="M60 45 Q80 35 85 15"/>
+              <path d="M100 140 L100 50"/><path d="M100 70 Q80 60 75 40"/><path d="M100 70 Q120 60 125 40"/>
+              <path d="M140 140 L140 30"/><path d="M140 55 Q120 45 115 25"/><path d="M140 55 Q160 45 165 25"/>
+              <path d="M180 140 L180 55"/><path d="M180 75 Q160 65 155 45"/>
+            </g>
+            <line x1="0" y1="140" x2="200" y2="140" stroke="#333F27" stroke-width="2"/>
+          </svg>
+        </div>
+        <figcaption>Le verger — pêchers, poiriers, figuiers</figcaption>
+      </figure>
+      <figure>
+        <div class="frame" style="background:linear-gradient(150deg,#F3E9D2,#E6D2A8);display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 200 160" width="72%">
+            <g stroke="#5C3A4E" stroke-width="2" fill="none">
+              <path d="M15 20 L15 140"/><path d="M55 20 L55 140"/><path d="M95 20 L95 140"/><path d="M135 20 L135 140"/><path d="M175 20 L175 140"/>
+            </g>
+            <g fill="#7A5A78">
+              <circle cx="25" cy="45" r="4"/><circle cx="35" cy="65" r="4"/><circle cx="20" cy="90" r="4"/>
+              <circle cx="65" cy="50" r="4"/><circle cx="75" cy="75" r="4"/><circle cx="60" cy="100" r="4"/>
+              <circle cx="105" cy="40" r="4"/><circle cx="115" cy="70" r="4"/><circle cx="100" cy="95" r="4"/>
+            </g>
+          </svg>
+        </div>
+        <figcaption>Le potager — planches en lignes, culture manuelle</figcaption>
+      </figure>
+      <figure>
+        <div class="frame" style="background:linear-gradient(150deg,#EAD9B8,#E2884E22);display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 200 160" width="68%">
+            <rect x="40" y="70" width="120" height="70" fill="none" stroke="#333F27" stroke-width="2"/>
+            <path d="M30 70 L100 25 L170 70 Z" fill="none" stroke="#5C3A4E" stroke-width="2"/>
+            <rect x="90" y="100" width="24" height="40" fill="none" stroke="#333F27" stroke-width="2"/>
+            <rect x="55" y="90" width="18" height="18" fill="none" stroke="#333F27" stroke-width="1.6"/>
+            <rect x="128" y="90" width="18" height="18" fill="none" stroke="#333F27" stroke-width="1.6"/>
+          </svg>
+        </div>
+        <figcaption>La ferme — bâtiments et logements</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===================== ONGLET 2 : NOS PRODUITS ===================== -->
+  <section id="produits" class="panel">
+    <div class="produits-head">
+      <div>
+        <div class="eyebrow">Au fil des saisons</div>
+        <h2>Ce que la terre nous donne, mois après mois.</h2>
+      </div>
+      <p style="color:var(--ink-soft); font-size:0.98rem;">Tous nos légumes et fruits sont cultivés en agriculture biologique, récoltés à maturité et vendus directement à la ferme. La roue ci-dessous indique, mois par mois, ce que vous pouvez retrouver à l'étal — cliquez sur un mois pour voir le détail.</p>
+    </div>
+
+    <div class="wheel-wrap">
+      <svg id="season-svg" viewBox="0 0 460 460"></svg>
+      <div class="season-detail">
+        <div class="month-name" id="detail-month">Juillet</div>
+        <ul class="produce-list" id="detail-list"></ul>
+        <p class="season-hint">Cliquez sur un secteur de la roue pour découvrir les récoltes du mois. Les quantités sont limitées : nous vous conseillons de venir tôt en saison de forte affluence.</p>
+      </div>
+    </div>
+
+    <div class="principles">
+      <div class="principle-card">
+        <svg viewBox="0 0 40 40" fill="none" stroke="#4B5D3A" stroke-width="2"><circle cx="20" cy="20" r="17"/><path d="M20 8 C 12 16, 12 24, 20 32 C 28 24, 28 16, 20 8Z"/></svg>
+        <h3>100% biologique</h3>
+        <p>Aucun pesticide ni engrais de synthèse — certification en cours d'obtention, méthodes biologiques appliquées depuis l'origine de la ferme.</p>
+      </div>
+      <div class="principle-card">
+        <svg viewBox="0 0 40 40" fill="none" stroke="#E2884E" stroke-width="2"><rect x="7" y="7" width="26" height="26" rx="2"/><path d="M7 20 H33 M20 7 V33"/></svg>
+        <h3>Récolte à maturité</h3>
+        <p>Chaque fruit et légume est cueilli au bon moment, jamais avant, pour un goût qui n'a rien à voir avec la grande distribution.</p>
+      </div>
+      <div class="principle-card">
+        <svg viewBox="0 0 40 40" fill="none" stroke="#5C3A4E" stroke-width="2"><path d="M20 33 C10 27 6 19 10 12 C13 7 19 7 20 13 C21 7 27 7 30 12 C34 19 30 27 20 33Z"/></svg>
+        <h3>Vente directe</h3>
+        <p>Pas d'intermédiaire : les produits vont du champ à votre panier, à la ferme, le temps d'une visite.</p>
+      </div>
+    </div>
+
+    <div class="vente-info">
+      <div>
+        <h3>Vente à la ferme</h3>
+        <p>Retrouvez notre étal directement sur place : légumes et fruits du moment, cueillis le matin même, en quantités volontairement limitées pour garantir leur fraîcheur.</p>
+      </div>
+      <div class="details">
+        <span>→ Mercredi &amp; Samedi, 9h–13h</span>
+        <span>→ Paiement carte ou espèces</span>
+        <span>→ Paniers de saison sur réservation</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ONGLET 3 : LES LOGEMENTS ===================== -->
+  <section id="logements" class="panel">
+    <div class="logements-head">
+      <div class="eyebrow">Séjourner à la ferme</div>
+      <h2>Deux logements, au cœur du verger et du potager.</h2>
+      <p>Dormez au rythme de la ferme : réveil au chant des oiseaux, vue sur les rangées de légumes, accès libre au verger. Choisissez vos dates directement sur le calendrier de chaque logement — votre demande est enregistrée immédiatement et un e-mail de demande vous sera proposé pour confirmation.</p>
+    </div>
+
+    <!-- GITE 1 -->
+    <article class="gite" data-gite="gite1" data-price="85">
+      <div class="gite-top">
+        <div class="gite-illustration">
+          <svg viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg">
+            <rect width="300" height="240" fill="#EFE7CE"/>
+            <path d="M0 190 Q150 175 300 188 V240 H0 Z" fill="#C9DBAF"/>
+            <rect x="90" y="120" width="120" height="70" fill="#F8F6EB" stroke="#333F27" stroke-width="2"/>
+            <path d="M80 120 L150 75 L220 120 Z" fill="#5C3A4E" opacity="0.85"/>
+            <rect x="140" y="150" width="26" height="40" fill="#4B5D3A"/>
+            <rect x="105" y="135" width="20" height="20" fill="none" stroke="#333F27" stroke-width="1.6"/>
+            <rect x="175" y="135" width="20" height="20" fill="none" stroke="#333F27" stroke-width="1.6"/>
+            <circle cx="245" cy="55" r="18" fill="#F2DCA1"/>
+            <g stroke="#4B5D3A" stroke-width="2" fill="none">
+              <path d="M55 190 V150"/><path d="M55 165 Q40 155 35 140"/><path d="M55 160 Q70 150 75 135"/>
+            </g>
+            <circle cx="35" cy="138" r="5" fill="#E2884E"/><circle cx="75" cy="133" r="5" fill="#E2884E"/>
+          </svg>
+        </div>
+        <div class="gite-info">
+          <div class="eyebrow">Logement 1</div>
+          <h3>Le Gîte du Verger</h3>
+          <p class="desc">Une maisonnette indépendante nichée entre les rangées de pêchers et de poiriers, avec vue directe sur le verger depuis la terrasse.</p>
+          <ul class="traits">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20 V10 L12 4 L20 10 V20 Z"/></svg> 2 chambres — jusqu'à 4 personnes</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2 V4 M12 20 V22 M4 12 H2 M22 12 H20"/></svg> Vue directe sur le verger</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="8" width="16" height="12" rx="1"/><path d="M8 8 V5 H16 V8"/></svg> Cuisine équipée &amp; terrasse privée</li>
+          </ul>
+          <div class="price-tag"><b>85€</b> / nuit</div>
+        </div>
+      </div>
+
+      <div class="gite-calendar">
+        <div class="cal-head">
+          <h4 class="cal-title">—</h4>
+          <div class="cal-nav">
+            <button type="button" class="cal-prev" aria-label="Mois précédent">‹</button>
+            <button type="button" class="cal-next" aria-label="Mois suivant">›</button>
+          </div>
+        </div>
+        <div class="cal-grid cal-dows">
+          <div class="cal-dow">Lun</div><div class="cal-dow">Mar</div><div class="cal-dow">Mer</div><div class="cal-dow">Jeu</div><div class="cal-dow">Ven</div><div class="cal-dow">Sam</div><div class="cal-dow">Dim</div>
+        </div>
+        <div class="cal-grid cal-days"></div>
+        <div class="cal-legend">
+          <span><i class="swatch" style="background:var(--paper); border:1px solid var(--line);"></i> Disponible</span>
+          <span><i class="swatch" style="background:#F2DCC4;"></i> Demande en attente</span>
+          <span><i class="swatch" style="background:#E7D5DC;"></i> Réservé</span>
+        </div>
+
+        <form class="request-form">
+          <div class="selected-date">Date sélectionnée : <span class="sel-date-text"></span></div>
+          <div class="form-grid">
+            <label>Nom<input type="text" name="name" required></label>
+            <label>E-mail<input type="email" name="email" required></label>
+            <label>Nombre de personnes<input type="number" name="guests" min="1" max="4" value="2" required></label>
+            <label>Téléphone (facultatif)<input type="tel" name="phone"></label>
+            <label class="full">Message (facultatif)<textarea name="message" placeholder="Précisez vos dates d'arrivée / départ souhaitées, toute demande particulière…"></textarea></label>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Envoyer la demande</button>
+            <button type="button" class="btn-ghost cal-cancel">Annuler</button>
+          </div>
+          <p class="form-note">En envoyant cette demande, la date choisie passe en « en attente » sur le calendrier. Votre logiciel de messagerie s'ouvrira avec un e-mail pré-rempli à destination de la ferme afin de confirmer votre demande.</p>
+          <div class="confirm-msg">Votre demande a bien été enregistrée pour le <span class="confirm-date"></span>. Nous revenons vers vous rapidement pour confirmer la réservation.</div>
+        </form>
+      </div>
+    </article>
+
+    <!-- GITE 2 -->
+    <article class="gite" data-gite="gite2" data-price="65">
+      <div class="gite-top">
+        <div class="gite-illustration">
+          <svg viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg">
+            <rect width="300" height="240" fill="#F3E9D2"/>
+            <path d="M0 195 Q150 205 300 192 V240 H0 Z" fill="#DCE7C6"/>
+            <rect x="115" y="130" width="80" height="60" fill="#F8F6EB" stroke="#333F27" stroke-width="2"/>
+            <path d="M108 130 L155 95 L202 130 Z" fill="#4B5D3A" opacity="0.85"/>
+            <rect x="145" y="155" width="20" height="35" fill="#5C3A4E"/>
+            <rect x="122" y="142" width="16" height="16" fill="none" stroke="#333F27" stroke-width="1.6"/>
+            <rect x="172" y="142" width="16" height="16" fill="none" stroke="#333F27" stroke-width="1.6"/>
+            <g stroke="#5C3A4E" stroke-width="2" fill="none">
+              <path d="M40 190 L40 150"/><path d="M40 165 Q25 155 20 138"/><path d="M40 160 Q55 150 60 133"/>
+              <path d="M260 190 L260 155"/><path d="M260 168 Q248 160 244 145"/>
+            </g>
+            <circle cx="20" cy="136" r="5" fill="#8E6D8A"/><circle cx="60" cy="131" r="5" fill="#8E6D8A"/>
+            <circle cx="244" cy="143" r="5" fill="#C99A2E"/>
+            <circle cx="55" cy="45" r="16" fill="#F2DCA1"/>
+          </svg>
+        </div>
+        <div class="gite-info">
+          <div class="eyebrow">Logement 2</div>
+          <h3>La Cabane du Potager</h3>
+          <p class="desc">Une cabane cosy pour deux, posée en lisière du potager, pensée pour un séjour simple et ressourçant, au plus près des cultures.</p>
+          <ul class="traits">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20 V10 L12 4 L20 10 V20 Z"/></svg> 1 chambre — jusqu'à 2 personnes</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2 V4 M12 20 V22 M4 12 H2 M22 12 H20"/></svg> Terrasse privée, vue sur le potager</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12 C4 7 8 4 12 4 C16 4 20 7 20 12 C20 17 16 20 12 20 C8 20 4 17 4 12Z"/></svg> Ambiance nature, calme assuré</li>
+          </ul>
+          <div class="price-tag"><b>65€</b> / nuit</div>
+        </div>
+      </div>
+
+      <div class="gite-calendar">
+        <div class="cal-head">
+          <h4 class="cal-title">—</h4>
+          <div class="cal-nav">
+            <button type="button" class="cal-prev" aria-label="Mois précédent">‹</button>
+            <button type="button" class="cal-next" aria-label="Mois suivant">›</button>
+          </div>
+        </div>
+        <div class="cal-grid cal-dows">
+          <div class="cal-dow">Lun</div><div class="cal-dow">Mar</div><div class="cal-dow">Mer</div><div class="cal-dow">Jeu</div><div class="cal-dow">Ven</div><div class="cal-dow">Sam</div><div class="cal-dow">Dim</div>
+        </div>
+        <div class="cal-grid cal-days"></div>
+        <div class="cal-legend">
+          <span><i class="swatch" style="background:var(--paper); border:1px solid var(--line);"></i> Disponible</span>
+          <span><i class="swatch" style="background:#F2DCC4;"></i> Demande en attente</span>
+          <span><i class="swatch" style="background:#E7D5DC;"></i> Réservé</span>
+        </div>
+
+        <form class="request-form">
+          <div class="selected-date">Date sélectionnée : <span class="sel-date-text"></span></div>
+          <div class="form-grid">
+            <label>Nom<input type="text" name="name" required></label>
+            <label>E-mail<input type="email" name="email" required></label>
+            <label>Nombre de personnes<input type="number" name="guests" min="1" max="2" value="2" required></label>
+            <label>Téléphone (facultatif)<input type="tel" name="phone"></label>
+            <label class="full">Message (facultatif)<textarea name="message" placeholder="Précisez vos dates d'arrivée / départ souhaitées, toute demande particulière…"></textarea></label>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Envoyer la demande</button>
+            <button type="button" class="btn-ghost cal-cancel">Annuler</button>
+          </div>
+          <p class="form-note">En envoyant cette demande, la date choisie passe en « en attente » sur le calendrier. Votre logiciel de messagerie s'ouvrira avec un e-mail pré-rempli à destination de la ferme afin de confirmer votre demande.</p>
+          <div class="confirm-msg">Votre demande a bien été enregistrée pour le <span class="confirm-date"></span>. Nous revenons vers vous rapidement pour confirmer la réservation.</div>
+        </form>
+      </div>
+    </article>
+  </section>
+
+</main>
+
+<footer class="contact-bar">
+  <div class="contact-inner">
+    <div>
+      <div class="brand-name">Au Jardin des<br>Fleurs aux Fruits</div>
+      <p class="tag">Ferme biologique en petite production — légumes, fruits et logements au cœur des cultures.</p>
+    </div>
+    <div class="contact-col">
+      <h4>Nous contacter</h4>
+      <a href="mailto:contact@jardindesfleursauxfruits.fr">contact@jardindesfleursauxfruits.fr</a>
+      <a href="tel:+33600000000">06 00 00 00 00</a>
+      <p>Chemin de la Ferme<br>Ouvert mercredi &amp; samedi, 9h–13h</p>
+    </div>
+    <div class="contact-col">
+      <h4>Sur la ferme</h4>
+      <p>Vente directe de fruits &amp; légumes bio</p>
+      <p>Deux logements à la nuitée</p>
+      <p>Visites sur rendez-vous</p>
+    </div>
+  </div>
+  <div class="bottom-line">
+    <span>© 2026 Au Jardin des Fleurs aux Fruits</span>
+    <span>Ferme familiale — agriculture biologique</span>
+  </div>
+</footer>
+
+<script>
+/* ---------------- Navigation par onglets ---------------- */
+const tabButtons = document.querySelectorAll('nav.tabs button');
+const panels = document.querySelectorAll('.panel');
+tabButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    tabButtons.forEach(b=>{b.classList.remove('active'); b.setAttribute('aria-selected','false');});
+    panels.forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+
+/* ---------------- Roue des saisons ---------------- */
+const monthsData = [
+  {name:"Janvier",  items:["Poireaux","Choux","Épinards","Panais"]},
+  {name:"Février",  items:["Poireaux","Mâche","Carottes d'hiver","Topinambours"]},
+  {name:"Mars",     items:["Épinards","Blettes","Radis","Asperges (début)"]},
+  {name:"Avril",    items:["Asperges","Radis","Petits pois","Premières fraises"]},
+  {name:"Mai",      items:["Fraises","Petits pois","Salades","Dernières cerises"]},
+  {name:"Juin",     items:["Cerises","Abricots","Courgettes","Salades"]},
+  {name:"Juillet",  items:["Pêches","Tomates","Courgettes","Haricots verts"]},
+  {name:"Août",     items:["Figues","Tomates","Aubergines","Melons"]},
+  {name:"Septembre",items:["Poires","Figues","Raisin","Fin des tomates"]},
+  {name:"Octobre",  items:["Pommes","Poires","Courges","Raisin"]},
+  {name:"Novembre", items:["Pommes","Courges","Choux","Poireaux"]},
+  {name:"Décembre", items:["Choux","Poireaux","Panais","Topinambours"]}
+];
+const seasonColors = ["#8FA6B5","#8FA6B5","#9CBB7E","#9CBB7E","#C7D98F","#E2884E","#E2884E","#C96A31","#C99A2E","#B77C3B","#7C8E68","#7C8E68"];
+
+const svgNS = "http://www.w3.org/2000/svg";
+const svg = document.getElementById('season-svg');
+const cx=230, cy=230, rOuter=200, rInner=90;
+monthsData.forEach((m, i)=>{
+  const a0 = (i/12)*2*Math.PI - Math.PI/2;
+  const a1 = ((i+1)/12)*2*Math.PI - Math.PI/2;
+  const x0 = cx + rOuter*Math.cos(a0), y0 = cy + rOuter*Math.sin(a0);
+  const x1 = cx + rOuter*Math.cos(a1), y1 = cy + rOuter*Math.sin(a1);
+  const ix0 = cx + rInner*Math.cos(a0), iy0 = cy + rInner*Math.sin(a0);
+  const ix1 = cx + rInner*Math.cos(a1), iy1 = cy + rInner*Math.sin(a1);
+  const path = document.createElementNS(svgNS,'path');
+  const d = `M ${ix0} ${iy0} L ${x0} ${y0} A ${rOuter} ${rOuter} 0 0 1 ${x1} ${y1} L ${ix1} ${iy1} A ${rInner} ${rInner} 0 0 0 ${ix0} ${iy0} Z`;
+  path.setAttribute('d', d);
+  path.setAttribute('fill', seasonColors[i]);
+  path.setAttribute('class', 'month-slice');
+  path.dataset.index = i;
+  path.addEventListener('click', ()=> selectMonth(i));
+  svg.appendChild(path);
+
+  const am = (a0+a1)/2;
+  const lx = cx + (rOuter+18)*Math.cos(am);
+  const ly = cy + (rOuter+18)*Math.sin(am);
+  const label = document.createElementNS(svgNS,'text');
+  label.setAttribute('x', lx); label.setAttribute('y', ly);
+  label.setAttribute('text-anchor','middle');
+  label.setAttribute('class','month-label');
+  label.textContent = m.name.slice(0,3);
+  svg.appendChild(label);
+});
+
+function selectMonth(i){
+  document.querySelectorAll('.month-slice').forEach(s=>s.classList.remove('active'));
+  svg.querySelector(`.month-slice[data-index="${i}"]`).classList.add('active');
+  document.getElementById('detail-month').textContent = monthsData[i].name;
+  const list = document.getElementById('detail-list');
+  list.innerHTML = '';
+  monthsData[i].items.forEach(it=>{
+    const li = document.createElement('li');
+    li.textContent = it;
+    list.appendChild(li);
+  });
+}
+// mois courant par défaut
+selectMonth(new Date().getMonth());
+
+/* ---------------- Calendrier de réservation ---------------- */
+const DOW = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+const MOIS_FR = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+const FARM_EMAIL = "contact@jardindesfleursauxfruits.fr";
+
+document.querySelectorAll('.gite').forEach(giteEl=>{
+  const giteId = giteEl.dataset.gite;
+  const giteName = giteEl.querySelector('h3').textContent;
+  const price = giteEl.dataset.price;
+  let viewDate = new Date();
+  viewDate.setDate(1);
+  let selectedISO = null;
+
+  const titleEl = giteEl.querySelector('.cal-title');
+  const daysEl = giteEl.querySelector('.cal-days');
+  const form = giteEl.querySelector('.request-form');
+  const selDateText = giteEl.querySelector('.sel-date-text');
+  const confirmMsg = giteEl.querySelector('.confirm-msg');
+  const confirmDate = giteEl.querySelector('.confirm-date');
+
+  async function loadAvailability(){
+    try{
+      const res = await window.storage.get('bookings:'+giteId, true);
+      return res && res.value ? JSON.parse(res.value) : [];
+    }catch(e){ return []; }
+  }
+  async function saveAvailability(list){
+    try{ await window.storage.set('bookings:'+giteId, JSON.stringify(list), true); }
+    catch(e){ console.error('storage error', e); }
+  }
+
+  function isoDate(d){
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  }
+
+  async function render(){
+    const bookings = await loadAvailability();
+    const bookedMap = {};
+    bookings.forEach(b=> bookedMap[b.date] = b.status);
+
+    titleEl.textContent = MOIS_FR[viewDate.getMonth()] + ' ' + viewDate.getFullYear();
+    daysEl.innerHTML = '';
+
+    const year = viewDate.getFullYear(), month = viewDate.getMonth();
+    const firstDay = new Date(year, month, 1);
+    let startOffset = firstDay.getDay() - 1; // lundi = 0
+    if(startOffset < 0) startOffset = 6;
+    const daysInMonth = new Date(year, month+1, 0).getDate();
+    const today = new Date(); today.setHours(0,0,0,0);
+
+    for(let i=0;i<startOffset;i++){
+      const cell = document.createElement('div');
+      cell.className = 'cal-day empty';
+      daysEl.appendChild(cell);
+    }
+    for(let d=1; d<=daysInMonth; d++){
+      const dateObj = new Date(year, month, d);
+      const iso = isoDate(dateObj);
+      const cell = document.createElement('div');
+      cell.className = 'cal-day';
+      cell.textContent = d;
+
+      if(dateObj < today){
+        cell.classList.add('past');
+      } else if(bookedMap[iso] === 'reserve'){
+        cell.classList.add('booked');
+        cell.title = 'Déjà réservé';
+      } else if(bookedMap[iso] === 'attente'){
+        cell.classList.add('pending');
+        cell.title = 'Demande en attente';
+      } else {
+        cell.classList.add('available');
+        if(iso === selectedISO) cell.classList.add('selected');
+        cell.addEventListener('click', ()=>{
+          selectedISO = iso;
+          render();
+          openForm(iso, dateObj);
+        });
+      }
+      daysEl.appendChild(cell);
+    }
+  }
+
+  function openForm(iso, dateObj){
+    form.classList.add('open');
+    confirmMsg.classList.remove('show');
+    const pretty = dateObj.toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+    selDateText.textContent = pretty;
+    form.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  giteEl.querySelector('.cal-prev').addEventListener('click', ()=>{
+    viewDate.setMonth(viewDate.getMonth()-1);
+    render();
+  });
+  giteEl.querySelector('.cal-next').addEventListener('click', ()=>{
+    viewDate.setMonth(viewDate.getMonth()+1);
+    render();
+  });
+  giteEl.querySelector('.cal-cancel').addEventListener('click', ()=>{
+    selectedISO = null;
+    form.classList.remove('open');
+    render();
+  });
+
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    if(!selectedISO) return;
+    const fd = new FormData(form);
+    const name = fd.get('name'), email = fd.get('email'), guests = fd.get('guests'),
+          phone = fd.get('phone') || '—', message = fd.get('message') || '—';
+
+    const bookings = await loadAvailability();
+    bookings.push({
+      date: selectedISO,
+      status: 'attente',
+      name, email, guests, phone, message,
+      timestamp: new Date().toISOString()
+    });
+    await saveAvailability(bookings);
+
+    const prettyDate = new Date(selectedISO+'T00:00:00').toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+    confirmDate.textContent = prettyDate;
+    confirmMsg.classList.add('show');
+
+    const subject = encodeURIComponent(`Demande de réservation — ${giteName} — ${selectedISO}`);
+    const body = encodeURIComponent(
+`Bonjour,
+
+Je souhaite réserver le logement "${giteName}" pour la date du ${prettyDate}.
+
+Nom : ${name}
+E-mail : ${email}
+Téléphone : ${phone}
+Nombre de personnes : ${guests}
+Tarif : ${price}€ / nuit
+Message : ${message}
+
+Merci de me confirmer la disponibilité.`
+    );
+    window.location.href = `mailto:${FARM_EMAIL}?subject=${subject}&body=${body}`;
+
+    form.reset();
+    selectedISO = null;
+    render();
+  });
+
+  render();
+});
+</script>
+
+</body>
+</html>
